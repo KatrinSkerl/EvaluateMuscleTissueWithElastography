@@ -1,0 +1,55 @@
+function [Bimg, secScaleY, StartC, EndC] = segmentBmode(AnonymImage)
+% This function segments the part of the image containing only the Bmode
+% image with the SWE image
+%
+%The surrounding of the B-mode image is black only (0,0,0) while the B-mode
+%image is a grey image. The vertical boundary of the B-mode image is 
+%therefore found by sum up all rows and the indices above/below a threshold 
+%are found as the vertical boundary of the B-mode image.
+%Cutting out of the upper B-mode image only is done by the function 
+%'detectPureBmode'.
+%
+% input values: AnonymImage - input image; entire image without
+%                             identification fields
+%                             note: students receive only anonymised
+%                                   images
+% output values: BmodeSWE - B-mode image containing the SWE image
+%                           Scale along y-axis
+%                           Start row, end row
+%
+% used functions:
+% detectPureBmode
+%
+% author Katrin Skerl, HFU
+% 07/10/2018
+
+Size = size(AnonymImage);
+NRows = Size(2);
+
+thresholdBmode=3000;
+
+
+%sums each row and saves them as SumVector
+SumVector = zeros(1,NRows);
+for index = 1:NRows
+    SumVector(index) = sum(AnonymImage(42:end, index, 1));
+end
+
+
+%finds values above/below threshold to find vertical boundary of B-mode image
+BmodeStart = 200 + find(SumVector(200:1300)>thresholdBmode,1,'first');
+BmodeEnd = BmodeStart+100 + find(SumVector(BmodeStart+100:1300)<thresholdBmode,1,'first');
+%just for control; contains upper and lower B-mode image
+BothBmode = AnonymImage( :, BmodeStart:BmodeEnd, :);
+
+%extract only the upper B-mode image
+[Bimg, StartC, EndC] = detectPureBmode(BothBmode);
+
+% position of output image
+positionBmod
+
+% Scale in y-direction
+secScaleY = AnonymImage( StartC:EndC, BmodeEnd-2:BmodeEnd+1, :);
+
+end
+
