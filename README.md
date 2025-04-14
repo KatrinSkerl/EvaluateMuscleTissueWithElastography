@@ -1,4 +1,4 @@
 # EvaluateMuscleTissueWithElastography
 App that enables the automatic evaluation of muscle tissue on elastography imaging using MATLAB
 
-update: We found a major bug and are working on the new version, which will be uploaded ASAP.
+update: Plase see the corrected version "Version 2", where we corrected some bugs and included hints given by the reviewers. @ the Reviewers: Thank you very much again for your valuable comments and your effort reviewing this code! 
