@@ -1,0 +1,72 @@
+function [croppedBmodeIm, secScaleX, secScaleY2, ] = segmentBmode2(Bimg, secScaleY)
+% This function is run after segmentBmode to crop only both Bmode images 
+% and remove any background
+
+% Set this value to one if only top image should be cropped
+% Zero means both top and bottom are cropped
+cropTopImage = 1;
+
+cropIn = Bimg;
+% cropIn is input image
+
+% convert image to binary
+crBw = im2bw(cropIn, 0.05);
+
+
+% Sum vector for rows and colums
+sumRows = sum(crBw, 2);  
+maxRow = max(sumRows);
+
+% Find 70% value of rows
+imLimRow = maxRow * 0.75;
+
+
+% Sum vector for rows and colums
+sumCols = sum(crBw, 1);  
+maxCol = max(sumCols);
+
+% Find 70% value of columns
+imLimCol = maxCol * 0.75;
+
+
+% Find start of image
+imStartRow = find(sumRows>imLimRow, 1, 'first');
+imStartCol = find(sumCols>imLimCol, 1, 'first');
+
+% Find end of image
+imEndRow = find(sumRows>imLimRow, 1, 'last');
+imEndCol = find(sumCols>imLimCol, 1, 'last');
+
+croppedImBoth = cropIn(imStartRow:imEndRow, imStartCol:imEndCol, :);
+
+% Crop out x and y scales
+secScaleX = cropIn(imStartRow-4:imStartRow-1, imStartCol+30:end, :);
+secScaleY2 = secScaleY(imStartRow:imEndRow, :, :);
+
+
+% -------------------------
+% get Bimg and crop to only get the top image
+% set -- to 1 to run this part of function
+
+if cropTopImage == 1
+
+    % Put cropped image through process again to find end of first image
+    bothBw = im2bw(croppedImBoth, 0.05);
+    
+    % Sum vector for rows and colums
+    sumRowsBoth = sum(bothBw, 2);  
+    
+    
+    % Find 15% value of rows
+    imLimRowBoth = maxRow * 0.1;
+    imEndRow = find(sumRowsBoth<imLimRowBoth, 1, 'first');
+    
+    %  Final image
+    croppedBmodeIm = croppedImBoth(1:(imEndRow-1), :, :);
+
+else
+    croppedBmodeIm = croppedImBoth;
+end
+
+end
+
