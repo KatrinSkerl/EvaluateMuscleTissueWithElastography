@@ -127,11 +127,12 @@ for m = startFrame:endFrame
             % As also grey values from the underlaying B-mode image are
             % transformed, a function is needed to turn them to 0,0,0.
             SWEImgBlock = replaceNonEValues(SWEImgBlock);
-            % transform image into matrix containing elasticity values
+            % transform image into matrix containing elasticity values, max 180kPa
+            % from previous application in breast tissue
             EMatrix = SWEtoKPa_muscles(SWEImgBlock);%change to SWEtoKPa_muscles100 if 100% opacity is chosen
             % convert colour scale to set maximum value
-            EMatrix300 = (inputMax / 300)*EMatrix;
-            Data = evalMuscleImgs(EMatrix300);
+            EMatrixUser = (inputMax / 180)*EMatrix; 
+            Data = evalMuscleImgs(EMatrixUser);
             Data = num2cell(Data);
             % Write into results cell array
             % First iteration for A
