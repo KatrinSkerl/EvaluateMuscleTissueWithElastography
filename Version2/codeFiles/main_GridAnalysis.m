@@ -53,7 +53,7 @@ results = {};
 results(2,1) = {'Frame'};
 
 % Parameters
-params = {'Anteil E-Werte', 'Mean','Median', 'Std', 'IQR', 'Max', 'N >295kPa', 'Anteil N>295kPa', '---'};
+params = {'amount of E-values', 'Mean','Median', 'Std', 'IQR', 'Max', 'N >maxValue', 'amount of N>maxValue', '---'};
 lenParams = max(size(params));
 
 % Counter for first row of boxes
