@@ -1,6 +1,6 @@
 # EvaluateMuscleTissueWithElastography
 App that enables the automatic evaluation of muscle tissue on elastography imaging using MATLAB.
-With this tool it is possible to evaluate clips of muscle tissue extracted from the Aixplorer devices without a research package automatically. You will receive the parameters of each single frame within the clip in a spread sheet. Further details can be found in our manuscript which is currently under review. Thus, we unfortunately cannot publish the manuscript here yet.
+With this tool it is possible to evaluate clips of muscle tissue extracted from the Aixplorer devices without a research package automatically. You will receive the parameters of each single frame within the clip in a spread sheet. Further details can be found in our manuscript. 
 
 Please see the short guide for further explanations of the GUI.
 
